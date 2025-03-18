@@ -31,6 +31,11 @@ const previewLikeCount = document.querySelector('#preview_like_count');
 const modal = document.getElementById("tweetModal");
 const openModalBtn = document.getElementById("btn_generate");
 const closeModal = document.querySelector(".close-btn");
+const downloadButton = document.querySelector("#downloadBtn");
+const previewContainer  = document.querySelector("#previewContainer");
+
+
+
 
 
 
@@ -118,6 +123,29 @@ window.addEventListener('click', (event)=>{
     modal.style.display = "none";
   }
 });
+
+downloadButton.addEventListener('click', ()=>{
+  console.log("shalu")
+  PrintDiv(previewContainer);
+});
+
+function PrintDiv(div) {
+  html2canvas(div).then((canvas) => {
+    var myImage = canvas.toDataURL();
+    downloadURI(myImage, 'shalu.png');
+  });
+}
+
+function downloadURI(uri, name) {
+  var link = document.createElement('a');
+
+  link.download = name;
+  link.href = uri;
+  document.body.appendChild(link);
+  link.click();
+  //after creating link you should delete dynamic link
+  //clearDynamicLink(link);
+}
 
 
 

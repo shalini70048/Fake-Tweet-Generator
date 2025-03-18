@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Twitter UI</title>
+    <script  src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -173,7 +174,7 @@
 
     <!-- Tweet Preview Modal -->
 <div id="tweetModal" class="modal">
-  <div class="preview-container">
+  <div class="preview-container" id="previewContainer">
     <span class="close-btn">&times;</span> <!-- Close Button -->
     <div class="tweet-header">
       <div class="avatar"></div>
@@ -201,6 +202,8 @@
       <div class="action">❤️</div>
       <div class="action">📤</div>
     </div>
+    <div class=" btn_generate" id="downloadBtn">⬇️ Download</div>
+    
     
   </div>
 </div>
