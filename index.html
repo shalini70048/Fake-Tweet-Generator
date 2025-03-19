@@ -1,213 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Twitter UI</title>
-    <script  src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        background-color: #f5f8fa;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        margin-top: 20px;
-      }
-      .tweet-container,
-      .preview-container {
-        background: white;
-        width: 500px;
-        border-radius: 10px;
-        padding: 15px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        margin-top: 20px;
-        position: relative;
-      }
-      .tweet-header {
-        display: flex;
-        align-items: center;
-      }
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        background: gray;
-        margin-right: 10px;
-      }
-      .tweet-info {
-        font-size: 14px;
-        display: flex;
-        flex-direction: column;
-      }
-      .tweet-info input,
-      .tweet-footer input,
-      .tweet-content textarea {
-        border: none;
-        /* font-size: 14px; */
-        /* font-weight: bold; */
-        width: 100%;
-        outline: none;
-        background: transparent;
-      }
-      .tweet-content textarea {
-        font-size: 16px;
-        resize: none;
-        height: 50px;
-        margin-top: 20px;
-      }
-      .tweet-footer {
-        display: flex;
-        justify-content: space-between;
-        font-size: 14px;
-        color: gray;
-        margin-top: 10px;
-      }
-      .actions {
-        display: flex;
-        justify-content: space-between;
-        margin-top: 10px;
-        padding-top: 10px;
-        border-top: 1px solid #ddd;
-      }
-      .action {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-      }
-      h1 {
-        display: flex;
-        justify-content: center;
-      }
-      .btn_generate {
-  background-color: #1da1f2; /* Twitter blue */
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  float: right;
-}
-.btn_generate:hover {
-  background-color: #0c85d0; /* Slightly darker blue */
-}
 
-/* Modal Background (Hidden by Default) */
-.modal {
-  display: none; /* Hidden initially */
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Twitter UI</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f8fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      margin-top: 20px;
+    }
 
-/* Modal Content */
-.preview-container {
-  background: white;
-  width: 500px;
-  border-radius: 10px;
-  padding: 15px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  position: relative;
-  display: block;
-  margin-top: 400px;
-}
+    .tweet-container,
+    .preview-container {
+      background: white;
+      width: 500px;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: 20px;
+      position: relative;
+    }
 
-/* Close Button */
-.close-btn {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 20px;
-  cursor: pointer;
-}
+    .tweet-header {
+      display: flex;
+      align-items: center;
+    }
 
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: gray;
+      margin-right: 10px;
+    }
 
+    .tweet-info {
+      font-size: 14px;
+      display: flex;
+      flex-direction: column;
+    }
 
-    </style>
-  </head>
-  <body>
-    <h1>Fake Tweet Generator</h1>
-    <div class="tweet-container">
-      
-      <div class="tweet-header">
-        <div class="avatar"></div>
-        <div class="tweet-info">
-          <input type="text" value="Shalu" placeholder="Name" id="user_fullname" />
-          <input type="text" value="Shalini@70085" placeholder="@Username" id="user_name" />
-        </div>
-      </div>
-      <div class="tweet-content">
-        <textarea placeholder="Your tweet here!" id="user_tweet"></textarea>
-      </div>
-      <div class="tweet-footer">
-        <input type="text" value="12:00 PM" id="tweet_time" />
-        <input type="text" value="April 05, 2001" id="tweet_date" />
-        <input type="text" value="Tweet from iPhone" id="tweet_device" />
-      </div>
-      <div class="tweet-footer">
-        <input type="text" value="5" id="retweet_count" />
-        <input type="text" value="10" id="quote_count" />
-        <input type="text" value="50" id="like_count" />
-      </div>
-      <div class="actions">
-        <div class="action">💬</div>
-        <div class="action">🔁</div>
-        <div class="action">❤️</div>
-        <div class="action">⬇️</div>
-      
-      </div>
-      <button class="btn_generate" id="btn_generate">Tweet Generator</button>
-    </div>
+    .tweet-info input,
+    .tweet-footer input,
+    .tweet-content textarea {
+      border: none;
+      /* font-size: 14px; */
+      /* font-weight: bold; */
+      width: 100%;
+      outline: none;
+      background: transparent;
+    }
 
-    <!-- Tweet Preview Modal -->
-<div id="tweetModal" class="modal">
-  <div class="preview-container" id="previewContainer">
-    <span class="close-btn">&times;</span> <!-- Close Button -->
+    .tweet-content textarea {
+      font-size: 16px;
+      resize: none;
+      height: 50px;
+      margin-top: 20px;
+    }
+
+    .tweet-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: gray;
+      margin-top: 10px;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid #ddd;
+    }
+
+    .action {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    h1 {
+      display: flex;
+      justify-content: center;
+    }
+
+    .btn_generate {
+      background-color: #1da1f2;
+      /* Twitter blue */
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      font-size: 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 10px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      float: right;
+    }
+
+    .btn_generate:hover {
+      background-color: #0c85d0;
+      /* Slightly darker blue */
+    }
+
+    /* Modal Background (Hidden by Default) */
+    .modal {
+      display: none;
+      /* Hidden initially */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Modal Content */
+    .preview-container {
+      background: white;
+      width: 500px;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+      display: block;
+      /* margin-top: 400px; */
+    }
+    .preview-tweet{
+      padding: 14px;
+      border-radius: 10px;
+    }
+
+    /* Close Button */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    #tweetModal {
+      display: none;
+      /* Hide modal on page load */
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Fake Tweet Generator</h1>
+  <div class="tweet-container">
+
     <div class="tweet-header">
       <div class="avatar"></div>
       <div class="tweet-info">
-        <div id="preview_user_fullname">Name</div>
-        <div id="preview_user_name">@Username</div>
+        <input type="text" value="Shalu" placeholder="Name" id="user_fullname" />
+        <input type="text" value="Shalini@70085" placeholder="@Username" id="user_name" />
       </div>
     </div>
     <div class="tweet-content">
-      <div id="preview_user_tweet">Your tweet here!</div>
+      <textarea placeholder="Your tweet here!" id="user_tweet"></textarea>
     </div>
     <div class="tweet-footer">
-      <div id="preview_tweet_time">12:00 PM</div>
-      <div id="preview_tweet_date">Jun 1, 2021</div>
-      <div id="preview_tweet_device">Click to add client...</div>
+      <input type="text" value="12:00 PM" id="tweet_time" />
+      <input type="text" value="April 05, 2001" id="tweet_date" />
+      <input type="text" value="Tweet from iPhone" id="tweet_device" />
     </div>
     <div class="tweet-footer">
-      <div id="preview_retweet_count">0 Retweets</div>
-      <div id="preview_quote_count">0 Quote Tweets</div>
-      <div id="preview_like_count">0 Likes</div>
+      <input type="text" value="5" id="retweet_count" />
+      <input type="text" value="10" id="quote_count" />
+      <input type="text" value="50" id="like_count" />
     </div>
     <div class="actions">
       <div class="action">💬</div>
       <div class="action">🔁</div>
       <div class="action">❤️</div>
-      <div class="action">📤</div>
+      <div class="action">⬇️</div>
+
     </div>
-    <div class=" btn_generate" id="downloadBtn">⬇️ Download</div>
-    
+    <button class="btn_generate" id="btn_generate">Tweet Generator</button>
+  </div>
+
+  <!-- Tweet Preview Modal -->
+  <div id="tweetModal" class="modal">
+    <div class="preview-container" id="previewContainer">
+      <div class="preview-tweet" id="preview-tweet">
+        <span class="close-btn">&times;</span> <!-- Close Button -->
+        <div class="tweet-header">
+          <div class="avatar"></div>
+          <div class="tweet-info">
+            <div id="preview_user_fullname">Name</div>
+            <div id="preview_user_name">@Username</div>
+          </div>
+        </div>
+        <div class="tweet-content">
+          <div id="preview_user_tweet">Your tweet here!</div>
+        </div>
+        <div class="tweet-footer">
+          <div id="preview_tweet_time">12:00 PM</div>
+          <div id="preview_tweet_date">Jun 1, 2021</div>
+          <div id="preview_tweet_device">Click to add client...</div>
+        </div>
+        <div class="tweet-footer">
+          <div id="preview_retweet_count">0 Retweets</div>
+          <div id="preview_quote_count">0 Quote Tweets</div>
+          <div id="preview_like_count">0 Likes</div>
+        </div>
+        <div class="actions">
+          <div class="action">💬</div>
+          <div class="action">🔁</div>
+          <div class="action">❤️</div>
+          <div class="action">📤</div>
+        </div>
+
+      </div>
+      <div class=" btn_generate" id="downloadBtn">⬇️ Download</div>
+
+
+    </div>
     
   </div>
-</div>
 
-    <script src="index.js"></script>
-  </body>
+
+
+  <script src="index.js"></script>
+</body>
+
 </html>

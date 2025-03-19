@@ -32,7 +32,7 @@ const modal = document.getElementById("tweetModal");
 const openModalBtn = document.getElementById("btn_generate");
 const closeModal = document.querySelector(".close-btn");
 const downloadButton = document.querySelector("#downloadBtn");
-const previewContainer  = document.querySelector("#previewContainer");
+const previewContainer  = document.querySelector("#preview-tweet");
 
 
 
@@ -123,6 +123,8 @@ window.addEventListener('click', (event)=>{
     modal.style.display = "none";
   }
 });
+
+
 
 downloadButton.addEventListener('click', ()=>{
   console.log("shalu")
