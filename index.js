@@ -12,9 +12,6 @@ const quoteCount = document.querySelector('#quote_count');
 const likeCount = document.querySelector('#like_count');
 
 const btnGenerate = document.querySelector('#btn_generate');
-
-
-
 const previewUserFullName = document.querySelector('#preview_user_fullname');
 const previewUserName = document.querySelector('#preview_user_name');
 const previewUsertweet = document.querySelector('#preview_user_tweet');
@@ -32,17 +29,7 @@ const modal = document.getElementById("tweetModal");
 const openModalBtn = document.getElementById("btn_generate");
 const closeModal = document.querySelector(".close-btn");
 const downloadButton = document.querySelector("#downloadBtn");
-const previewContainer  = document.querySelector("#preview-tweet");
-
-
-
-
-
-
-
-
-
-
+const previewContainer = document.querySelector("#preview-tweet");
 
 const getTweetPreview = ({ tweet }) => {
 
@@ -57,23 +44,27 @@ const getTweetPreview = ({ tweet }) => {
     quoteCountValue,
     likeCountValue } = tweet;
 
+  const tweetDate = formatDate(userTweetDateValue);
   previewUserFullName.innerHTML = userFullNameValue;
   previewUserName.innerHTML = userNameValue;
   previewUsertweet.innerHTML = userTweetValue;
   previewUserTweetTime.innerHTML = userTweetTimeValue;
-  previewUserTweetDate.innerHTML = userTweetDateValue;
+  previewUserTweetDate.innerHTML = tweetDate;
+
   previewUserTweetDevice.innerHTML = userTweetDeviceValue;
   previewRetweetCount.innerHTML = retweetCountValue;
   PreviewQuoteCount.innerHTML = quoteCountValue;
   previewLikeCount.innerHTML = likeCountValue;
 
-
-
-
 }
 
+function formatDate(inputDate) {
+  const date = new Date(inputDate); // Convert string to Date object
 
+  const options = { day: 'numeric', month: 'long', year: 'numeric' };
+  return date.toLocaleDateString('en-GB', options); // Format the date
 
+}
 const getTweetValues = () => {
   const userFullNameValue = userFullName.value;
   const userNameValue = userName.value;
@@ -86,8 +77,6 @@ const getTweetValues = () => {
   const retweetCountValue = retweetCount.value;
   const quoteCountValue = quoteCount.value;
   const likeCountValue = likeCount.value;
-  console.log("pritam");
-
 
   const userTweetObj = {
     userFullNameValue,
@@ -100,33 +89,29 @@ const getTweetValues = () => {
     quoteCountValue,
     likeCountValue
   }
-
-
   getTweetPreview({ tweet: userTweetObj })
 };
 
 btnGenerate.addEventListener('click', getTweetValues);
 
 // Open modal when clicking the button
-openModalBtn.addEventListener('click', ()=>{
+openModalBtn.addEventListener('click', () => {
   modal.style.display = "flex";
 });
 
 // Close modal when clicking "×"
-closeModal.addEventListener('click', ()=>{
+closeModal.addEventListener('click', () => {
   modal.style.display = "none";
 });
 
 // Close modal when clicking outside the modal content
-window.addEventListener('click', (event)=>{
+window.addEventListener('click', (event) => {
   if (event.target === modal) {
     modal.style.display = "none";
   }
 });
 
-
-
-downloadButton.addEventListener('click', ()=>{
+downloadButton.addEventListener('click', () => {
   console.log("shalu")
   PrintDiv(previewContainer);
 });
@@ -148,6 +133,7 @@ function downloadURI(uri, name) {
   //after creating link you should delete dynamic link
   //clearDynamicLink(link);
 }
+
 
 
 
