@@ -33,13 +33,25 @@
       align-items: center;
     }
 
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: gray;
-      margin-right: 10px;
-    }
+    .profile-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .profile-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #ddd;
+        cursor: pointer;
+      }
+
+      .file-input {
+        display: none;
+      }
 
     .tweet-info {
       font-size: 14px;
@@ -166,7 +178,15 @@
   <div class="tweet-container">
 
     <div class="tweet-header">
-      <div class="avatar"></div>
+      <div class="profile-container">
+        <img
+          id="profilePreview"
+          class="profile-image"
+          src="https://picsum.photos/200/300"
+          alt="Profile"
+        />
+        <input type="file" id="fileInput" class="file-input" accept="image/*" />
+      </div>
       <div class="tweet-info">
         <input type="text" value="Shalu" placeholder="Name" id="user_fullname" />
         <input type="text" value="Shalini@70085" placeholder="@Username" id="user_name" />
@@ -176,7 +196,7 @@
       <textarea placeholder="Your tweet here!" id="user_tweet"></textarea>
     </div>
     <div class="tweet-footer">
-      <input type="text" value="12:00 PM" id="tweet_time" />
+      <input type="time" value="12:00 PM" id="tweet_time" />
       <input type="date" value="" id="tweet_date" />
       <input type="text" value="Tweet from iPhone" id="tweet_device" />
     </div>
@@ -201,7 +221,14 @@
       <div class="preview-tweet" id="preview-tweet">
         <span class="close-btn">&times;</span> <!-- Close Button -->
         <div class="tweet-header">
-          <div class="avatar"></div>
+          <div class="profile-container">
+            <img
+              id="preview_profile_Preview"
+              class="profile-image"
+              src="https://picsum.photos/200/300"
+              alt="Profile"
+            />
+          </div>
           <div class="tweet-info">
             <div id="preview_user_fullname">Name</div>
             <div id="preview_user_name">@Username</div>

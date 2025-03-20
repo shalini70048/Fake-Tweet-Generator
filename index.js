@@ -1,3 +1,6 @@
+const profilePreview = document.getElementById('profilePreview');
+const fileInput = document.getElementById('fileInput');
+
 const userFullName = document.querySelector('#user_fullname');
 const userName = document.querySelector('#user_name');
 const usertweet = document.querySelector('#user_tweet');
@@ -12,6 +15,7 @@ const quoteCount = document.querySelector('#quote_count');
 const likeCount = document.querySelector('#like_count');
 
 const btnGenerate = document.querySelector('#btn_generate');
+const previewProfilePreview = document.getElementById('preview_profile_Preview');
 const previewUserFullName = document.querySelector('#preview_user_fullname');
 const previewUserName = document.querySelector('#preview_user_name');
 const previewUsertweet = document.querySelector('#preview_user_tweet');
@@ -34,7 +38,9 @@ const previewContainer = document.querySelector("#preview-tweet");
 const getTweetPreview = ({ tweet }) => {
 
 
-  const { userFullNameValue,
+  const { 
+    
+    userFullNameValue,
     userNameValue,
     userTweetValue,
     userTweetTimeValue,
@@ -133,6 +139,25 @@ function downloadURI(uri, name) {
   //after creating link you should delete dynamic link
   //clearDynamicLink(link);
 }
+
+
+
+
+      profilePreview.addEventListener('click', function () {
+        fileInput.click();
+      });
+
+      fileInput.addEventListener('change', function (event) {
+        const file = event.target.files[0];
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            document.getElementById('profilePreview').src = e.target.result;
+          };
+          reader.readAsDataURL(file);
+        }
+      });
+
 
 
 
